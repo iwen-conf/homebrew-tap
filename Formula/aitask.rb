@@ -1,8 +1,8 @@
 class Aitask < Formula
   desc "AI Agent project orchestrator CLI"
   homepage "https://github.com/iwen-conf/aitask-cli"
-  url "https://github.com/iwen-conf/aitask-cli/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "5b4726340d15c1cf48f689f00b53fc46816f453a9908087eaf9ad329c9a454ad"
+  url "https://github.com/iwen-conf/aitask-cli/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "e0cb82c91b3742368a6b062451cd97a37fbf4ee9c73912176c47fba9b05d518c"
   license "MIT"
   head "https://github.com/iwen-conf/aitask-cli.git", branch: "main"
 
