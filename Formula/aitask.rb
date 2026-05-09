@@ -1,19 +1,35 @@
 class Aitask < Formula
-  desc "AI Agent project orchestrator CLI"
+  desc "AI Agent project orchestrator CLI suite"
   homepage "https://github.com/iwen-conf/aitask-cli"
-  url "https://github.com/iwen-conf/aitask-cli/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "e0cb82c91b3742368a6b062451cd97a37fbf4ee9c73912176c47fba9b05d518c"
+  url "https://github.com/iwen-conf/aitask-cli/archive/refs/tags/v0.3.0.tar.gz"
+  sha256 "REPLACE_WITH_RELEASE_TARBALL_SHA256"
   license "MIT"
   head "https://github.com/iwen-conf/aitask-cli.git", branch: "main"
 
   depends_on "go" => :build
 
+  conflicts_with "aitask-watch", because: "both install the aitask-watch binary"
+
   def install
     ldflags = "-s -w -X main.version=v#{version}"
-    system "go", "build", *std_go_args(ldflags: ldflags, output: bin/"aitask"), "./cmd/aitask"
+    {
+      "aitask" => "./aitask",
+      "aitask-watch" => "./aitask-watch",
+      "aitask-worker" => "./aitask-worker",
+      "aitask-agent-watch" => "./aitask-agent-watch",
+    }.each do |binary, main|
+      system "go", "build", *std_go_args(ldflags: ldflags, output: bin/binary), main
+    end
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/aitask --version")
+    %w[
+      aitask
+      aitask-watch
+      aitask-worker
+      aitask-agent-watch
+    ].each do |binary|
+      assert_match version.to_s, shell_output("#{bin}/#{binary} --version")
+    end
   end
 end
